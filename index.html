@@ -38,6 +38,9 @@
             padding: 15px;
             cursor: pointer;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .estados-answer {
@@ -50,6 +53,15 @@
             height: auto;
             margin: 10px 0;
         }
+
+        .seta {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .seta.ativa {
+            transform: rotate(90deg);
+        }
     </style>
 </head>
 
@@ -58,7 +70,7 @@
 
     <div class="estados-container">
         <div class="estados-item">
-            <div class="estados-question">São Paulo (SP)</div>
+            <div class="estados-question">São Paulo (SP) <span class="seta">▶</span></div>
             <div class="estados-answer">
                 <p>Em São Paulo, as lojas devem exibir placas informando sobre o direito do consumidor conforme o
                     Código de Defesa do Consumidor.</p>
@@ -68,7 +80,7 @@
         </div>
 
         <div class="estados-item">
-            <div class="estados-question">Rio de Janeiro (RJ)</div>
+            <div class="estados-question">Rio de Janeiro (RJ) <span class="seta">▶</span></div>
             <div class="estados-answer">
                 <p>No Rio de Janeiro, as lojas devem exibir placas informando sobre o direito do consumidor conforme o
                     Código de Defesa do Consumidor.</p>
@@ -78,7 +90,7 @@
         </div>
 
         <div class="estados-item">
-            <div class="estados-question">Minas Gerais (MG)</div>
+            <div class="estados-question">Minas Gerais (MG) <span class="seta">▶</span></div>
             <div class="estados-answer">
                 <p>Em Minas Gerais, as lojas devem exibir placas informando sobre o direito do consumidor conforme o
                     Código de Defesa do Consumidor.</p>
@@ -96,7 +108,11 @@
         questions.forEach(question => {
             question.addEventListener('click', () => {
                 const answer = question.nextElementSibling;
-                answer.style.display = (answer.style.display === 'block') ? 'none' : 'block';
+                const seta = question.querySelector('.seta');
+
+                const isOpen = answer.style.display === 'block';
+                answer.style.display = isOpen ? 'none' : 'block';
+                seta.classList.toggle('ativa', !isOpen);
             });
         });
     </script>
