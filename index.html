@@ -57,6 +57,52 @@
     border-radius: 8px;
     text-align: center;
         }
+        .search-wrapper {
+  max-width: 800px;
+  margin: 0 auto 20px auto;
+  position: relative;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 10px;
+  pointer-events: none;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fff;
+}
+
+#searchInput:focus {
+  border-color: #ff6900;
+  outline: none;
+}
+
+/* Acessibilidade extra */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
 
         .estados-container {
             max-width: 800px;
@@ -180,11 +226,17 @@
         <img src="./img/1. atendimento preferencial.png" alt="Placa Direito do Consumidor" />
     </div>
 
-    <div class="search-container">
-        <label for="searchInput" style="display:none;">Buscar por estado ou cidade</label>
-        <input type="text" id="searchInput" placeholder="Buscar por estado ou cidade..."
-            aria-label="Buscar por estado ou cidade">
-    </div>
+    <div class="search-wrapper" role="search">
+  <label for="searchInput" class="visually-hidden">Buscar cidade ou estado</label>
+  <div class="search-container">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="#888" d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 001.48-5.34C15.17 5.59 12.53 3 9.25 3S3.33 5.59 3.09 8.89a6.51 6.51 0 0011.28 4.49l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.25 14C6.9 14 5 12.1 5 9.75S6.9 5.5 9.25 5.5 13.5 7.4 13.5 9.75 11.6 14 9.25 14z"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Buscar cidade ou estado..." aria-label="Buscar cidade ou estado">
+  </div>
+</div>
+
+
 
     <div class="estados-container" id="estadosContainer">
         <!-- Estado: São Paulo -->
