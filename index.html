@@ -245,6 +245,51 @@
 
             </div>
         </div>
+        
+        <div class="estados-item" data-estado="Amazonas AM">
+            <div class="estados-question" tabindex="0" role="button" aria-expanded="false">Amazonas (AM)<span
+                    class="seta">▶</span></div>
+            <div class="estados-answer">
+                <div class="cidade" data-cidade="Amazonas">
+                    <div class="cidade-question" tabindex="0" role="button" aria-expanded="false">Amazonas<span class="seta">▶</span></div>
+                    <div class="cidade-answer">
+                        <img src="./img/al/1. atendimento preferencial.png" alt="Placa Barueri">
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+
+        <div class="estados-item" data-estado="Bahia BA">
+            <div class="estados-question" tabindex="0" role="button" aria-expanded="false">Bahia (BA)<span
+                    class="seta">▶</span></div>
+            <div class="estados-answer">
+                <div class="cidade" data-cidade="Amazonas">
+                    <div class="cidade-question" tabindex="0" role="button" aria-expanded="false">Bahia<span
+                            class="seta">▶</span></div>
+                    <div class="cidade-answer">
+                        <img src="./img/bh/1. atendimento preferencial.png" alt="Placa Barueri">
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+
+
+        <div class="estados-item" data-estado="Bahia BA">
+            <div class="estados-question" tabindex="0" role="button" aria-expanded="false">Bahia (BA)<span class="seta">▶</span>
+            </div>
+            <div class="estados-answer">
+                <div class="cidade" data-cidade="Amazonas">
+                    <div class="cidade-question" tabindex="0" role="button" aria-expanded="false">Bahia<span
+                            class="seta">▶</span></div>
+                    <div class="cidade-answer">
+                        <img src="./img/bh/1. atendimento preferencial.png" alt="Placa Barueri">
+                    </div>
+                </div>
+        
+            </div>
+        </div>
 
 
 
@@ -252,7 +297,7 @@
 
 
 
-        <div class="estados-item" data-estado="são paulo">
+        <div class="estados-item" data-estado="são paulo SP">
             <div class="estados-question" tabindex="0" role="button" aria-expanded="false">São Paulo (SP) <span
                     class="seta">▶</span></div>
             <div class="estados-answer">
@@ -307,38 +352,58 @@
 
     </div>
 
-    <script>
-        function toggleElemento(el) {
-            const content = el.nextElementSibling;
-            const seta = el.querySelector('.seta');
-            const expanded = el.getAttribute('aria-expanded') === 'true';
-            content.style.display = expanded ? 'none' : 'block';
-            el.setAttribute('aria-expanded', !expanded);
-            seta.classList.toggle('ativa', !expanded);
-        }
+<script>
+    function toggleElemento(el) {
+        const content = el.nextElementSibling;
+        const seta = el.querySelector('.seta');
+        const expanded = el.getAttribute('aria-expanded') === 'true';
+        content.style.display = expanded ? 'none' : 'block';
+        el.setAttribute('aria-expanded', !expanded);
+        seta.classList.toggle('ativa', !expanded);
+    }
 
-        function aplicarListeners() {
-            document.querySelectorAll('.estados-question, .cidade-question').forEach(el => {
-                el.onclick = () => toggleElemento(el);
-                el.onkeydown = (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        toggleElemento(el);
-                    }
-                };
-            });
-        }
-
-        // Inicialmente, não mostra nada
-        document.querySelectorAll('.estados-item').forEach(estado => {
-            estado.style.display = 'block';
+    function aplicarListeners() {
+        document.querySelectorAll('.estados-question, .cidade-question').forEach(el => {
+            el.onclick = () => toggleElemento(el);
+            el.onkeydown = (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleElemento(el);
+                }
+            };
         });
+    }
 
-        // Executa busca e mostra/oculta os itens
-        document.getElementById('searchInput').addEventListener('input', () => {
-            const termo = document.getElementById('searchInput').value.toLowerCase();
-            const estados = document.querySelectorAll('.estados-item');
 
+    // Deixa todos os estados visíveis inicialmente (mas com cidades ocultas)
+    document.querySelectorAll('.estados-item').forEach(estado => {
+        estado.style.display = 'block';
+    });
+
+    // Executa busca e mostra/oculta os itens
+    document.getElementById('searchInput').addEventListener('input', () => {
+        const termo = document.getElementById('searchInput').value.toLowerCase().trim();
+        const estados = document.querySelectorAll('.estados-item');
+
+        if (termo === '') {
+            // Limpar busca: recolher tudo
+            estados.forEach(estado => {
+                estado.style.display = 'block';
+                const estadoQuestion = estado.querySelector('.estados-question');
+                const estadoAnswer = estado.querySelector('.estados-answer');
+                const seta = estadoQuestion.querySelector('.seta');
+
+                estadoAnswer.style.display = 'none';
+                estadoQuestion.setAttribute('aria-expanded', false);
+                seta.classList.remove('ativa');
+
+                // Oculta todas as cidades
+                estado.querySelectorAll('.cidade').forEach(cidade => {
+                    cidade.style.display = 'block';
+                });
+            });
+
+        } else {
             estados.forEach(estado => {
                 const nomeEstado = estado.dataset.estado.toLowerCase();
                 const cidades = estado.querySelectorAll('.cidade');
@@ -360,13 +425,14 @@
                 estadoQuestion.setAttribute('aria-expanded', estadoVisivel);
                 seta.classList.toggle('ativa', estadoVisivel);
             });
+        }
 
-            aplicarListeners(); // Reaplica os eventos após a busca
-        });
+        aplicarListeners(); // Garante que os listeners estejam ativos após busca
+    });
 
-        // Aplica listeners no carregamento (se quiser deixar itens visíveis por padrão em outra versão)
-        aplicarListeners();
-    </script>
+    aplicarListeners();
+</script>
+
 
 </body>
 
